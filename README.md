@@ -19,10 +19,10 @@ To view this app locally on your machine type `node server.js` into your termina
 
 To end the sever connection simply hold down `ctrl + c` inside of your terminal.
 
-## Built With :crescent_moon:
+## Built With
 * HTML5 & CSS3
 * [Bootstrap](https://getbootstrap.com/) - CSS framework
-* [Boostrap Sliders](http://seiyria.com/bootstrap-slider/) - slider
+* [JQuery](https://jquery.com/)
 * [Javascript](https://www.javascript.com/) - programming language
 * [Node.js](https://nodejs.org/en/) - javascript runtime
 * [Express.js](https://expressjs.com/) - routing framework
