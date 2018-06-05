@@ -322,8 +322,10 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-              Added with success!
+            <div class="modal-body text-center">
+                <h3>We found a match!</h3>
+                <h4 class="name-result"></h4>
+                <img src="" alt="img result" class="img-result img-fluid">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -358,16 +360,17 @@
           // Here we grab the form elements
             var answersArray = [];
 
-            answersArray.push($("input[name='q1']:checked").val());
-            answersArray.push($("input[name='q2']:checked").val());
-            answersArray.push($("input[name='q3']:checked").val());
-            answersArray.push($("input[name='q4']:checked").val());
-            answersArray.push($("input[name='q5']:checked").val());
-            answersArray.push($("input[name='q6']:checked").val());
-            answersArray.push($("input[name='q7']:checked").val());
-            answersArray.push($("input[name='q8']:checked").val());
-            answersArray.push($("input[name='q9']:checked").val());
-            answersArray.push($("input[name='q10']:checked").val());
+            answersArray.push(Number($("input[name='q1']:checked").val()));
+            answersArray.push(Number($("input[name='q2']:checked").val()));
+            answersArray.push(Number($("input[name='q3']:checked").val()));
+            answersArray.push(Number($("input[name='q4']:checked").val()));
+            answersArray.push(Number($("input[name='q5']:checked").val()));
+            answersArray.push(Number($("input[name='q6']:checked").val()));
+            answersArray.push(Number($("input[name='q7']:checked").val()));
+            answersArray.push(Number($("input[name='q8']:checked").val()));
+            answersArray.push(Number($("input[name='q9']:checked").val()));
+            answersArray.push(Number($("input[name='q10']:checked").val()));
+            
 
             var newFriend = {
             "name": $("#friendName").val().trim(),
@@ -375,19 +378,23 @@
             "answers": answersArray
             };
             
-            console.log(newFriend);
     
           // This line is the magic. It"s very similar to the standard ajax function we used.
           // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
           // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
           // depending on if a tables is available or not.
     
-          $.post("/api/newfriend", newFriend,
+          $.post("/api/friends", newFriend,
             function(data) {
-    
+                
+                $(".name-result").text(data.name);
+                $(".img-result").attr("src", data.photo);
+                $('#myModal').modal('show');
+                
               // If a table is available... tell user they are booked.
               if (data) {
-                $('#myModal').modal('show');
+                
+                
               }
     
               // If a table is available... tell user they on the waiting list.
