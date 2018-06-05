@@ -1,5 +1,7 @@
 # Friendfinder - Built with Node.js, Javascript, HTML, CSS and jQuery 
 
+![image](./readme/thumb.png)
+
 To enhance my knowledge on Node.js together with Javascript, HTML and CSS, I created a Matchmaking friend-style app! 
 
 ## Getting Started :floppy_disk:
