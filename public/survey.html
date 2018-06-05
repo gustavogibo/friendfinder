@@ -43,7 +43,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Offical Github Repository</a>
+                    <a class="nav-link" href="https://github.com/gustavogibo/friendfinder" target="blank">Official Github Repository</a>
             </li>
           </ul>
         </div>
@@ -62,8 +62,8 @@
                 <input type="text" class="form-control form-control-lg" id="friendName" placeholder="Your name">
             </div>
             <div class="form-group">
-                    <h2><label for="exampleFormControlInput1">Put here a profile picture URL</label></h2>
-                    <input type="text" class="form-control form-control-lg" id="photo" placeholder="E.G https://i.imgur.com/YKhObkG.jpg">
+                <h2><label for="exampleFormControlInput1">Put here a profile picture URL</label></h2>
+                <input type="text" class="form-control form-control-lg" id="photo" placeholder="E.G https://i.imgur.com/YKhObkG.jpg">
                 </div>
             <div class="quiz-box">
                 <h2>How do you respond to stress?</h2>
@@ -264,19 +264,19 @@
                     <label for="radio9-1">I'm travelling right now</label>
                     </div>
                 <div class="inputGroup">
-                    <input id="radio9-2" name="q9" type="radio" value="1"/>
+                    <input id="radio9-2" name="q9" type="radio" value="2"/>
                     <label for="radio9-2">I love it</label>
                 </div>
                 <div class="inputGroup">
-                    <input id="radio9-3" name="q9" type="radio" value="2"/>
+                    <input id="radio9-3" name="q9" type="radio" value="3"/>
                     <label for="radio9-3">I usually like it</label>
                 </div>
                 <div class="inputGroup">
-                    <input id="radio9-4" name="q9" type="radio" value="3"/>
+                    <input id="radio9-4" name="q9" type="radio" value="4"/>
                     <label for="radio9-4">I rarely like it</label>
                 </div>
                 <div class="inputGroup">
-                    <input id="radio9-5" name="q9" type="radio" value="4"/>
+                    <input id="radio9-5" name="q9" type="radio" value="5"/>
                     <label for="radio9-5">Never</label>
                 </div>
             </div>
@@ -288,30 +288,49 @@
                     <label for="radio10-1">Cool</label>
                     </div>
                 <div class="inputGroup">
-                    <input id="radio10-2" name="q10" type="radio" value="1"/>
+                    <input id="radio10-2" name="q10" type="radio" value="2"/>
                     <label for="radio10-2">Compassionate</label>
                 </div>
                 <div class="inputGroup">
-                    <input id="radio10-3" name="q10" type="radio" value="2"/>
+                    <input id="radio10-3" name="q10" type="radio" value="3"/>
                     <label for="radio10-3">Powerful</label>
                 </div>
                 <div class="inputGroup">
-                    <input id="radio10-4" name="q10" type="radio" value="3"/>
+                    <input id="radio10-4" name="q10" type="radio" value="4"/>
                     <label for="radio10-4">Friendly</label>
                 </div>
                 <div class="inputGroup">
-                    <input id="radio10-5" name="q10" type="radio" value="4"/>
+                    <input id="radio10-5" name="q10" type="radio" value="5"/>
                     <label for="radio10-5">Intimidating</label>
                 </div>
             </div>
             <div class="text-right">
-                    <button type="button" class="btn btn-success btn-lg">Find Friend</button>
+                    <button type="button" class="btn btn-success btn-lg submit">Find Friend</button>
             </div>
                 
           </div>
         </section>
 
     </form>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Result!</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Added with success!
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     
 
     <!-- Footer -->
@@ -325,6 +344,76 @@
     <!-- Bootstrap core JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="theme/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+
+        // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
+        // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+        // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+        // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+    
+        $(".submit").on("click", function(event) {
+        
+          event.preventDefault();
+    
+          // Here we grab the form elements
+            var answersArray = [];
+
+            answersArray.push($("input[name='q1']:checked").val());
+            answersArray.push($("input[name='q2']:checked").val());
+            answersArray.push($("input[name='q3']:checked").val());
+            answersArray.push($("input[name='q4']:checked").val());
+            answersArray.push($("input[name='q5']:checked").val());
+            answersArray.push($("input[name='q6']:checked").val());
+            answersArray.push($("input[name='q7']:checked").val());
+            answersArray.push($("input[name='q8']:checked").val());
+            answersArray.push($("input[name='q9']:checked").val());
+            answersArray.push($("input[name='q10']:checked").val());
+
+            var newFriend = {
+            "name": $("#friendName").val().trim(),
+            "photo": $("#photo").val().trim(),
+            "answers": answersArray
+            };
+            
+            console.log(newFriend);
+    
+          // This line is the magic. It"s very similar to the standard ajax function we used.
+          // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+          // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+          // depending on if a tables is available or not.
+    
+          $.post("/api/newfriend", newFriend,
+            function(data) {
+    
+              // If a table is available... tell user they are booked.
+              if (data) {
+                $('#myModal').modal('show');
+              }
+    
+              // If a table is available... tell user they on the waiting list.
+              else {
+                alert("Sorry you are on the wait list");
+              }
+    
+              // Clear the form when submitting
+                $("#friendName").val();
+                $("#photo").val();
+                $("input[name='q1'").prop('checked', false);
+                $("input[name='q2'").prop('checked', false);
+                $("input[name='q3'").prop('checked', false);
+                $("input[name='q4'").prop('checked', false);
+                $("input[name='q5'").prop('checked', false);
+                $("input[name='q6'").prop('checked', false);
+                $("input[name='q7'").prop('checked', false);
+                $("input[name='q8'").prop('checked', false);
+                $("input[name='q9'").prop('checked', false);
+                $("input[name='q10'").prop('checked', false);
+    
+            });
+    
+        });
+    
+    </script>
 
   </body>
 

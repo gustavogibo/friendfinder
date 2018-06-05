@@ -1,19 +1,20 @@
+
+var friends = require("../app/data/friends");
 // ===============================================================================
 // LOAD DATA
 // We are linking our routes to a series of "data" sources.
 // These data sources hold arrays of information on table-data, waitinglist, etc.
 // ===============================================================================
-var express = require("express");
-var friends = require("../app/data/friends");
 
-app = express();
+// var friends = require("../data/friends");
+// var friends = require("../data/waitinglistData");
 
 
 // ===============================================================================
 // ROUTING
 // ===============================================================================
 
-module.exports = function() {
+module.exports = function(app) {
   // API GET Requests
   // Below code handles when users "visit" a page.
   // In each of the below cases when a user visits a link
@@ -21,6 +22,10 @@ module.exports = function() {
   // ---------------------------------------------------------------------------
 
   app.get("/api/tables", function(req, res) {
+    res.json(friends);
+  });
+
+  app.get("/api/waitlist", function(req, res) {
     res.json(friends);
   });
 
@@ -32,19 +37,14 @@ module.exports = function() {
   // Then the server saves the data to the friends array)
   // ---------------------------------------------------------------------------
 
-  // app.post("/api/tables", function(req, res) {
-  //   // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
-  //   // It will do this by sending out the value "true" have a table
-  //   // req.body is available since we're using the body-parser middleware
-  //   if (friends.length < 5) {
-  //     friends.push(req.body);
-  //     res.json(true);
-  //   }
-  //   else {
-  //     waitListData.push(req.body);
-  //     res.json(false);
-  //   }
-  // });
+  app.post("/api/newfriend", function(req, res) {
+    // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
+    // It will do this by sending out the value "true" have a table
+    // req.body is available since we're using the body-parser middleware
+    
+      friends.push(req.body);
+      res.json(true);
+  });
 
   // ---------------------------------------------------------------------------
   // I added this below code so you could clear out the table while working with the functionality.
@@ -54,6 +54,6 @@ module.exports = function() {
     // Empty out the arrays of data
     friends = [];
 
-  //   console.log(friends);
+    console.log(friends);
   });
 };

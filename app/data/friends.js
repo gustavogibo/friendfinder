@@ -7,9 +7,9 @@
 
 var friends = [
   {
-    customerName: "Dwight",
+    name: "Dwight",
     photo: "https://pbs.twimg.com/profile_images/1863312401/Dwight.jpg",
-    scores: [3,5,3,2,2,3,1,4,5,5]
+    answers: [3,5,3,2,2,3,1,4,5,5]
   }
 ];
 
